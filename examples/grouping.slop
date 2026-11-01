@@ -1,0 +1,2 @@
+— Parentheses group: (1 + 2) * 3 is 9, while 1 + 2 * 3 is 7.
+hallucinate((1 + 2) * 3)✨
