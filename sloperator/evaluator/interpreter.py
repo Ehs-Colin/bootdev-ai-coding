@@ -59,9 +59,14 @@ class Interpreter:
 
     def execute(self, statement: Stmt) -> None:
         match statement:
-            case VarDecl(name, initializer, mutable):
+            case VarDecl(name, initializer, mutable, keyword):
                 value = self.evaluate(initializer)
-                self.environment.declare(name.lexeme, value, mutable, name.line)
+                label = (
+                    "loadbearing"
+                    if keyword is not None and keyword.type is TokenType.LOADBEARING
+                    else "immutable binding"
+                )
+                self.environment.declare(name.lexeme, value, mutable, name.line, label)
             case Assign(name, _, value_expr):
                 value = self.evaluate(value_expr)
                 self.environment.assign(name.lexeme, value, name.line)

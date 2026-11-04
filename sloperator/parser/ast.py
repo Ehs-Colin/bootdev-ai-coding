@@ -96,6 +96,7 @@ class VarDecl(Stmt):
     name: Token
     initializer: Expr
     mutable: bool
+    keyword: Token | None = None
 
 
 @dataclass(frozen=True)

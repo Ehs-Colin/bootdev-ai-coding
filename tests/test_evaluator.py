@@ -74,6 +74,35 @@ hallucinate(x)✨"""
     assert run(source) == "2\n"
 
 
+def test_loadbearing_variables_can_be_read():
+    assert run("loadbearing MAX = 3✨\nhallucinate(MAX)✨") == "3\n"
+
+
+def test_loadbearing_variables_cannot_be_assigned():
+    assert fails("loadbearing MAX = 3✨\nMAX = 4✨") == (
+        "SlopLang runtime error at line 2: cannot assign to loadbearing 'MAX'"
+    )
+
+
+def test_loadbearing_follows_slop_scope_and_shadowing_rules():
+    source = """loadbearing x = 1✨
+{
+    loadbearing x = 2✨
+    hallucinate(x)✨
+}
+hallucinate(x)✨"""
+    assert run(source) == "2\n1\n"
+
+
+def test_loadbearing_declarations_work_inside_functions():
+    source = """clanker answer() {
+    loadbearing value = 42✨
+    ship value✨
+}
+hallucinate(answer())✨"""
+    assert run(source) == "42\n"
+
+
 def test_loop_body_is_a_fresh_scope_each_iteration():
     source = """slop i = 0✨
 ralph i < 3 {

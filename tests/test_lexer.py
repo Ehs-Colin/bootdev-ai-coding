@@ -33,6 +33,17 @@ def test_two_character_operators_are_greedy():
     ]
 
 
+def test_loadbearing_is_a_keyword():
+    assert types("loadbearing x = 1✨") == [
+        TokenType.LOADBEARING,
+        TokenType.IDENTIFIER,
+        TokenType.EQUAL,
+        TokenType.NUMBER,
+        TokenType.SPARKLES,
+        TokenType.EOF,
+    ]
+
+
 def test_variation_selector_after_emoji_is_absorbed():
     tokens = tokenize("✅️✨️")
     assert [t.type for t in tokens] == [TokenType.TRUE, TokenType.SPARKLES, TokenType.EOF]
