@@ -158,6 +158,7 @@ hallucinate(find())✨"""
         ("hallucinate(-“a”)✨", "operand of unary '-' must be a number, got string"),
         ("hallucinate(“a” < “b”)✨", "operands of '<' must be numbers, got string and string"),
         ("hallucinate(1 - ✅)✨", "operands of '-' must be numbers, got number and boolean"),
+        ("hallucinate(1 / 0)✨", "division by zero"),
         ("ralph 0 { }", "ralph condition must be a boolean, got number"),
         ("hallucinate(1)(2)✨", "can only call clankers, got nil"),
     ],
