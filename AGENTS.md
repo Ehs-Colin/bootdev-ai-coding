@@ -24,7 +24,8 @@ uv run ruff check
 uv run ty check
 ```
 
-Known baseline: `ruff format --check` reports `tests/test_lexer_regression.py` as unformatted. Do not reformat unrelated files just to make the check pass.
+- After any code change, run the ruff formatter: `uv run ruff format`.
+- Then verify formatting: `uv run ruff format --check`.
 
 Comparison precedence regression test: `uv run pytest tests/test_comparisons.py`.
 
