@@ -14,9 +14,7 @@ from sloperator.lexer import tokenize
         ("“abc\\\r\n”", 1, "unknown escape sequence '\\\r'"),
     ],
 )
-def test_backslash_before_raw_newline_is_a_lexical_error(
-    source: str, line: int, message: str
-):
+def test_backslash_before_raw_newline_is_a_lexical_error(source: str, line: int, message: str):
     with pytest.raises(LexicalError) as info:
         tokenize(source)
     assert info.value.line == line

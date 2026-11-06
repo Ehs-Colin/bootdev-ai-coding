@@ -63,6 +63,10 @@ def test_logical_operands_must_be_booleans():
     )
 
 
+def test_logical_not_negates_booleans():
+    assert run("hallucinate(!✅, !❌, !!✅)✨") == "❌ ✅ ✅\n"
+
+
 def test_assignment_walks_up_the_scope_chain():
     source = """slop x = 1✨
 {
@@ -156,6 +160,8 @@ hallucinate(find())✨"""
     ("source", "message"),
     [
         ("hallucinate(-“a”)✨", "operand of unary '-' must be a number, got string"),
+        ("hallucinate(!1)✨", "operand of unary '!' must be a boolean, got number"),
+        ("hallucinate(!“a”)✨", "operand of unary '!' must be a boolean, got string"),
         ("hallucinate(“a” < “b”)✨", "operands of '<' must be numbers, got string and string"),
         ("hallucinate(1 - ✅)✨", "operands of '-' must be numbers, got number and boolean"),
         ("hallucinate(1 / 0)✨", "division by zero"),

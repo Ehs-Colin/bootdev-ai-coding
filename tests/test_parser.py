@@ -13,6 +13,7 @@ from sloperator.parser.ast import (
     If,
     Literal,
     Ship,
+    Unary,
     VarDecl,
     Variable,
     While,
@@ -40,6 +41,13 @@ def test_grouping_overrides_precedence():
     expr = only_expression("(1 + 2) * 3✨")
     assert isinstance(expr, Binary) and expr.operator.type is TokenType.STAR
     assert isinstance(expr.left, Grouping)
+
+
+def test_unary_not_binds_tighter_than_equality():
+    expr = only_expression("!✅ == ✅✨")
+    assert isinstance(expr, Binary) and expr.operator.type is TokenType.EQUAL_EQUAL
+    assert isinstance(expr.left, Unary) and expr.left.operator.type is TokenType.BANG
+    assert isinstance(expr.left.operand, Literal) and expr.left.operand.value is True
 
 
 def test_calls_chain():
