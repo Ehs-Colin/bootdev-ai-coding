@@ -1,0 +1,4 @@
+— Equality never coerces between numbers, strings, and booleans.
+hallucinate(1 == 1)✨
+hallucinate(1 == “1”)✨
+hallucinate(✅ == 1)✨
