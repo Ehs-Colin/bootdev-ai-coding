@@ -82,6 +82,21 @@ def test_loadbearing_variables_can_be_read():
     assert run("loadbearing MAX = 3✨\nhallucinate(MAX)✨") == "3\n"
 
 
+def test_variables_may_contain_digits_after_the_first_character():
+    source = """slop score2 = 40✨
+score2 = score2 + 2✨
+hallucinate(score2)✨"""
+    assert run(source) == "42\n"
+
+
+def test_function_and_parameter_names_may_contain_digits():
+    source = """clanker add2(value1, value2) {
+    ship value1 + value2✨
+}
+hallucinate(add2(40, 2))✨"""
+    assert run(source) == "42\n"
+
+
 def test_loadbearing_variables_cannot_be_assigned():
     assert fails("loadbearing MAX = 3✨\nMAX = 4✨") == (
         "SlopLang runtime error at line 2: cannot assign to loadbearing 'MAX'"

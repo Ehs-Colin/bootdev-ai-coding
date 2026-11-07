@@ -58,6 +58,17 @@ def test_hallucinate_is_an_identifier_not_a_keyword():
     assert tokenize("hallucinate")[0].type is TokenType.IDENTIFIER
 
 
+def test_identifiers_may_contain_digits_after_the_first_character():
+    assert tokenize("score2")[0] == Token(TokenType.IDENTIFIER, "score2", None, 1)
+
+
+def test_identifiers_cannot_start_with_a_digit():
+    tokens = tokenize("2score")
+    assert [t.type for t in tokens] == [TokenType.NUMBER, TokenType.IDENTIFIER, TokenType.EOF]
+    assert tokens[0].literal == 2
+    assert tokens[1].lexeme == "score"
+
+
 def test_comment_newline_advances_line_number():
     tokens = tokenize("— first\n— second\nx✨")
     assert tokens[0] == Token(TokenType.IDENTIFIER, "x", None, 3)
